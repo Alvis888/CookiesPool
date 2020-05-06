@@ -19,8 +19,8 @@ class ValidTester(object):
             self.test(username, cookies)
 
 
-class WeiboValidTester(ValidTester):
-    def __init__(self, website='weibo'):
+class DouBanValidTester(ValidTester):
+    def __init__(self, website='douban'):
         ValidTester.__init__(self, website)
     
     def test(self, username, cookies):
@@ -46,4 +46,4 @@ class WeiboValidTester(ValidTester):
             print('发生异常', e.args)
 
 if __name__ == '__main__':
-    WeiboValidTester().run()
+    DouBanValidTester().run()

@@ -1,9 +1,6 @@
 import time
 from multiprocessing import Process
-
 from cookiespool.api import app
-from cookiespool.config import *
-from cookiespool.generator import *
 from cookiespool.tester import *
 
 

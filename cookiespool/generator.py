@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
 from cookiespool.config import *
 from cookiespool.db import RedisClient
-from login.weibo.cookies import WeiboCookies
+from login.douban.cookies import DouBanCookies
 
 
 class CookiesGenerator(object):
@@ -97,8 +97,8 @@ class CookiesGenerator(object):
             print('Browser not opened')
 
 
-class WeiboCookiesGenerator(CookiesGenerator):
-    def __init__(self, website='weibo'):
+class DouBanWeiboCookiesGenerator(CookiesGenerator):
+    def __init__(self, website='douban'):
         """
         初始化操作
         :param website: 站点名称
@@ -114,9 +114,9 @@ class WeiboCookiesGenerator(CookiesGenerator):
         :param password: 密码
         :return: 用户名和Cookies
         """
-        return WeiboCookies(username, password, self.browser).main()
+        return DouBanCookies(username, password, self.browser).main()
 
 
 if __name__ == '__main__':
-    generator = WeiboCookiesGenerator()
+    generator = DouBanWeiboCookiesGenerator()
     generator.run()
