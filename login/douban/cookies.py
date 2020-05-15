@@ -21,12 +21,23 @@ class DouBanCookies():
         """
         self.browser.delete_all_cookies()
         self.browser.get(self.url)
-        password_login = self.wait.until(EC.presence_of_element_located((By.XPATH, '//li[text()="密码登录"]'))).click()
-        username = self.wait.until(EC.presence_of_element_located((By.ID, 'username')))
+        self.browser.maximize_window()
+        self.browser.switch_to.default_content()
+
+        iframe = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//div[@class="login"]//iframe[@frameborder="0"]')))
+        self.browser.switch_to.frame(iframe)
+
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, '//li[text()="密码登录"]'))).click()
+        username = self.wait.until(EC.presence_of_element_located((By.XPATH, '//input[@id="username"]')))
         password = self.wait.until(EC.presence_of_element_located((By.ID, 'password')))
         submit = self.wait.until(EC.element_to_be_clickable((By.XPATH, '//a[text()="登录豆瓣"]')))
-        username.clear().send_keys(self.username)
-        password.clear().send_keys(self.password)
+
+        username.clear()
+        username.send_keys(self.username)
+
+        password.clear()
+        password.send_keys(self.password)
+
         time.sleep(1)
         submit.click()
     
@@ -36,8 +47,11 @@ class DouBanCookies():
         :return:
         """
         try:
-            return WebDriverWait(self.browser, 5).until(
-                EC.text_to_be_present_in_element((By.XPATH, '//div[@class="account-form-error"]//span'), '用户名或密码错误'))
+            element = self.browser.find_element_by_xpath('//div[@class="account-form-error"]//span')
+            print(element.get_text())
+            err_msg = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="account-form-error"]//span'))).text
+            print(err_msg)
+            return False if len(err_msg) > 0 else False
         except TimeoutException:
             return False
     
@@ -92,5 +106,8 @@ class DouBanCookies():
 
 
 if __name__ == '__main__':
-    result = DouBanCookies('14773427930', 'x6pybpakq1').main()
+    from selenium import webdriver
+
+    browser = webdriver.Chrome()
+    result = DouBanCookies('jksdgf', 'xiesakjdgb', browser).main()
     print(result)
