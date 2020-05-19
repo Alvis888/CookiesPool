@@ -1,11 +1,11 @@
 import json
 from flask import Flask, g
-from cookiespool.config import *
-from cookiespool.db import *
+from cookiespool.config import GENERATOR_MAP
 
 __all__ = ['app']
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def index():
@@ -43,7 +43,7 @@ def add(website, username, password):
     :param website: 站点
     :param username: 用户名
     :param password: 密码
-    :return: 
+    :return: 添加结果
     """
     g = get_conn()
     print(username, password)

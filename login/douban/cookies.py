@@ -13,7 +13,7 @@ class DouBanCookies():
         self.wait = WebDriverWait(self.browser, 20)
         self.username = username
         self.password = password
-    
+
     def open(self):
         """
         打开网页输入用户名密码并点击
@@ -40,7 +40,7 @@ class DouBanCookies():
 
         time.sleep(1)
         submit.click()
-    
+
     def password_error(self):
         """
         判断是否密码错误
@@ -49,12 +49,13 @@ class DouBanCookies():
         try:
             element = self.browser.find_element_by_xpath('//div[@class="account-form-error"]//span')
             print(element.get_text())
-            err_msg = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="account-form-error"]//span'))).text
+            err_msg = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located(
+                (By.XPATH, '//div[@class="account-form-error"]//span'))).text
             print(err_msg)
             return False if len(err_msg) > 0 else False
         except TimeoutException:
             return False
-    
+
     def login_successfully(self):
         """
         判断是否登录成功
@@ -65,14 +66,14 @@ class DouBanCookies():
                 WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[text()="说句话"]'))))
         except TimeoutException:
             return False
-    
+
     def get_cookies(self):
         """
         获取Cookies
         :return:
         """
         return self.browser.get_cookies()
-    
+
     def main(self):
         """
         破解入口
